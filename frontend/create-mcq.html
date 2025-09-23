@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create MCQ - Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="create-mcq.html" class="active"><i class="fa-solid fa-plus"></i> Create MCQ</a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+            <a href="#" id="logout-btn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1"><i class="fas fa-plus-circle"></i> Admin - Create MCQs</h1>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="showTab('individual')">
+                <i class="fas fa-edit"></i> Individual MCQ
+            </button>
+            <button class="tab-btn" onclick="showTab('bulk')">
+                <i class="fas fa-upload"></i> Bulk Upload (Excel)
+            </button>
+        </div>
+
+        <!-- Individual MCQ Creation Tab -->
+        <div id="individual-tab" class="tab-content active">
+            <div class="create-mcq-container">
+                <div class="loading" id="loading-individual">
+                    <i class="fas fa-spinner"></i>
+                    <p>Processing...</p>
+                </div>
+
+                <form id="mcq-form">
+                    <!-- Question Section -->
+                    <div class="form-group">
+                        <label for="question">Question *</label>
+                        <textarea id="question" name="question" class="form-control" required 
+                                  placeholder="Enter your question here..."></textarea>
+                        
+                        <div class="image-upload-section" data-field="question">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #007bff; margin-bottom: 0.5rem;"></i>
+                            <p>Upload question image (optional)</p>
+                            <input type="file" class="image-upload-input" accept="image/*" data-field="question">
+                            <button type="button" class="upload-button" onclick="triggerFileInput('question')">
+                                <i class="fas fa-upload"></i> Choose Image
+                            </button>
+                            <div class="image-preview" data-field="question">
+                                <img class="preview-image" alt="Question image preview">
+                                <button type="button" class="remove-image" onclick="removeImage('question')">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options Section -->
+                    <div class="form-group">
+                        <label>Answer Options *</label>
+                        <div class="options-grid">
+                            <!-- Option A -->
+                            <div class="option-item">
+                                <div class="option-header">Option A</div>
+                                <textarea name="optionA" class="form-control" required 
+                                          placeholder="Enter option A..."></textarea>
+                                <div class="image-upload-section" data-field="optionA">
+                                    <p><i class="fas fa-image"></i> Image for Option A</p>
+                                    <input type="file" class="image-upload-input" accept="image/*" data-field="optionA">
+                                    <button type="button" class="upload-button" onclick="triggerFileInput('optionA')">
+                                        Choose Image
+                                    </button>
+                                    <div class="image-preview" data-field="optionA">
+                                        <img class="preview-image" alt="Option A image">
+                                        <button type="button" class="remove-image" onclick="removeImage('optionA')">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option B -->
+                            <div class="option-item">
+                                <div class="option-header">Option B</div>
+                                <textarea name="optionB" class="form-control" required 
+                                          placeholder="Enter option B..."></textarea>
+                                <div class="image-upload-section" data-field="optionB">
+                                    <p><i class="fas fa-image"></i> Image for Option B</p>
+                                    <input type="file" class="image-upload-input" accept="image/*" data-field="optionB">
+                                    <button type="button" class="upload-button" onclick="triggerFileInput('optionB')">
+                                        Choose Image
+                                    </button>
+                                    <div class="image-preview" data-field="optionB">
+                                        <img class="preview-image" alt="Option B image">
+                                        <button type="button" class="remove-image" onclick="removeImage('optionB')">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option C -->
+                            <div class="option-item">
+                                <div class="option-header">Option C</div>
+                                <textarea name="optionC" class="form-control" required 
+                                          placeholder="Enter option C..."></textarea>
+                                <div class="image-upload-section" data-field="optionC">
+                                    <p><i class="fas fa-image"></i> Image for Option C</p>
+                                    <input type="file" class="image-upload-input" accept="image/*" data-field="optionC">
+                                    <button type="button" class="upload-button" onclick="triggerFileInput('optionC')">
+                                        Choose Image
+                                    </button>
+                                    <div class="image-preview" data-field="optionC">
+                                        <img class="preview-image" alt="Option C image">
+                                        <button type="button" class="remove-image" onclick="removeImage('optionC')">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option D -->
+                            <div class="option-item">
+                                <div class="option-header">Option D</div>
+                                <textarea name="optionD" class="form-control" required 
+                                          placeholder="Enter option D..."></textarea>
+                                <div class="image-upload-section" data-field="optionD">
+                                    <p><i class="fas fa-image"></i> Image for Option D</p>
+                                    <input type="file" class="image-upload-input" accept="image/*" data-field="optionD">
+                                    <button type="button" class="upload-button" onclick="triggerFileInput('optionD')">
+                                        Choose Image
+                                    </button>
+                                    <div class="image-preview" data-field="optionD">
+                                        <img class="preview-image" alt="Option D image">
+                                        <button type="button" class="remove-image" onclick="removeImage('optionD')">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Correct Answer -->
+                    <div class="form-group">
+                        <div class="correct-answer-section">
+                            <label>Correct Answer *</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="correct-a" name="correctAnswer" value="A" required>
+                                    <label for="correct-a">A</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="correct-b" name="correctAnswer" value="B" required>
+                                    <label for="correct-b">B</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="correct-c" name="correctAnswer" value="C" required>
+                                    <label for="correct-c">C</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="correct-d" name="correctAnswer" value="D" required>
+                                    <label for="correct-d">D</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div class="form-group">
+                        <label for="explanation">Explanation (Optional)</label>
+                        <textarea id="explanation" name="explanation" class="form-control" 
+                                  placeholder="Provide explanation for the correct answer..."></textarea>
+                        
+                        <div class="image-upload-section" data-field="explanation">
+                            <p><i class="fas fa-lightbulb"></i> Upload explanation image (optional)</p>
+                            <input type="file" class="image-upload-input" accept="image/*" data-field="explanation">
+                            <button type="button" class="upload-button" onclick="triggerFileInput('explanation')">
+                                <i class="fas fa-upload"></i> Choose Image
+                            </button>
+                            <div class="image-preview" data-field="explanation">
+                                <img class="preview-image" alt="Explanation image">
+                                <button type="button" class="remove-image" onclick="removeImage('explanation')">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metadata -->
+                    <div class="form-group">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" class="form-control" 
+                                       placeholder="e.g., Chemical Engineering">
+                            </div>
+                            <div>
+                                <label for="topic">Topic</label>
+                                <input type="text" id="topic" name="topic" class="form-control" 
+                                       placeholder="e.g., Heat Transfer">
+                            </div>
+                            <div>
+                                <label for="exam">Exam</label>
+                                <input type="text" id="exam" name="exam" class="form-control" 
+                                       placeholder="e.g., GATE">
+                            </div>
+                            <div>
+                                <label for="year">Year</label>
+                                <input type="number" id="year" name="year" class="form-control" 
+                                       min="1990" max="2030" placeholder="e.g., 2024">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="resetIndividualForm()">
+                            <i class="fas fa-undo"></i> Reset Form
+                        </button>
+                        <button type="submit" class="btn primary" id="submit-btn">
+                            <i class="fas fa-save"></i> Create MCQ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bulk Upload Tab -->
+        <div id="bulk-tab" class="tab-content">
+            <div class="upload-section">
+                <div class="loading" id="loading-bulk">
+                    <i class="fas fa-spinner"></i>
+                    <p>Processing Excel file...</p>
+                </div>
+
+                <div class="upload-info">
+                    <h3><i class="fas fa-info-circle"></i> Excel Upload Instructions</h3>
+                    <div class="info-content">
+                        <p>Upload an Excel (.xlsx) file with MCQ data. Your file should have the following columns:</p>
+                        <div class="column-info">
+                            <div class="required-columns">
+                                <h4>Required Columns:</h4>
+                                <ul>
+                                    <li><strong>Question</strong> - The question text</li>
+                                    <li><strong>Option A, Option B, Option C, Option D</strong> - Answer choices</li>
+                                    <li><strong>Correct Answer</strong> - Must be A, B, C, or D</li>
+                                </ul>
+                            </div>
+                            <div class="optional-columns">
+                                <h4>Optional Columns:</h4>
+                                <ul>
+                                    <li><strong>Explanation</strong> - Explanation for the answer</li>
+                                    <li><strong>Subject</strong> - Subject name</li>
+                                    <li><strong>Topic</strong> - Topic name</li>
+                                    <li><strong>Exam</strong> - Exam name</li>
+                                    <li><strong>Year</strong> - Year (1990-2030)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="image-support-info">
+                            <h4>Image Support:</h4>
+                            <p>For questions with images, you can add these columns with image URLs:</p>
+                            <ul>
+                                <li><strong>questionImageUrl, optionAImageUrl, optionBImageUrl, optionCImageUrl, optionDImageUrl, explanationImageUrl</strong></li>
+                                <li>Corresponding description columns: <strong>questionImageDescription, optionAImageDescription,</strong> etc.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="uploadForm" class="upload-form">
+                    <div class="file-upload-area">
+                        <i class="fas fa-file-excel" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+                        <h3>Upload Excel File</h3>
+                        <p>Drag and drop your .xlsx file here or click to browse</p>
+                        <input type="file" id="mcqFile" name="mcqFile" accept=".xlsx" required>
+                        <button type="button" onclick="document.getElementById('mcqFile').click()" class="btn secondary">
+                            <i class="fas fa-folder-open"></i> Choose File
+                        </button>
+                    </div>
+                    <div class="upload-actions">
+                        <button type="submit" class="btn primary" id="upload-submit-btn">
+                            <i class="fas fa-upload"></i> Upload MCQs
+                        </button>
+                    </div>
+                </form>
+
+                <div id="upload-results" class="upload-results" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="create-mcq.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html>

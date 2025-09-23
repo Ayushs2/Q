@@ -1,0 +1,171 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MCQ Hub • Dashboard</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+            <a href="#" id="logout-btn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1">Dashboard</h1>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+        <section class="grid two">
+            <div class="card">
+                <h3 style="margin-bottom:8px;">Your Progress</h3>
+                <table id="progress-table" class="table">
+                    <thead><tr><th>Date</th><th>Score</th><th>Total Questions</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h3 style="margin-bottom:8px;">Leaderboard</h3>
+                <table id="leaderboard-table" class="table">
+                    <thead><tr><th>Rank</th><th>User</th><th>Total Score</th><th>Tests</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+        <section class="card">
+            <h3 style="margin-bottom:8px;">Bookmarked Questions</h3>
+            <div id="bookmarks-container"><p class="hint">Loading bookmarks…</p></div>
+        </section>
+    </div>
+    <script src="dashboard.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MCQ Hub • Dashboard</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html" class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="admin-panel.html" id="admin-panel-link" style="display:none;"><i class="fa-solid fa-cog"></i> Admin Panel</a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+            <a href="auth.html" id="auth-link" class="btn primary">Login</a>
+            <a href="#" id="logout-btn" class="btn danger" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1">Dashboard</h1>
+            <div class="user-greeting">
+                <span>Welcome back, <span id="user-name">Student</span>!</span>
+            </div>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+
+        <!-- Stats Overview -->
+        <section class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="stat-content">
+                    <div class="stat-number" id="total-questions">0</div>
+                    <div class="stat-label">Questions Attempted</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-content">
+                    <div class="stat-number" id="total-score">0</div>
+                    <div class="stat-label">Total Score</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                <div class="stat-content">
+                    <div class="stat-number" id="avg-accuracy">0%</div>
+                    <div class="stat-label">Average Accuracy</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-content">
+                    <div class="stat-number" id="total-tests">0</div>
+                    <div class="stat-label">Tests Taken</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid two">
+            <div class="card">
+                <h3><i class="fas fa-chart-line"></i> Performance Trend</h3>
+                <canvas id="performance-chart"></canvas>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-chart-pie"></i> Subject Performance</h3>
+                <canvas id="subject-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Recent Activity & Leaderboard -->
+        <section class="grid two">
+            <div class="card">
+                <h3><i class="fas fa-history"></i> Recent Tests</h3>
+                <div id="recent-tests">
+                    <p class="hint">Loading recent activity...</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
+                <div id="leaderboard-container">
+                    <p class="hint">Loading leaderboard...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bookmarks & Study Plan -->
+        <section class="grid two">
+            <div class="card">
+                <h3><i class="fas fa-bookmark"></i> Your Bookmarks</h3>
+                <div id="bookmarks-container">
+                    <p class="hint">Loading bookmarks...</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-target"></i> Study Recommendations</h3>
+                <div id="study-recommendations">
+                    <p class="hint">Analyzing your performance...</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html>

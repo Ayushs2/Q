@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MCQ Hub • Practice</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+    <nav class="nav">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="mcq.html" class="active"><i class="fa-solid fa-list-check"></i> Practice</a>
+      <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+      <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    </nav>
+    <div class="bottom">
+      <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+      <a href="#" id="logout-btn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+  </aside>
+
+  <div class="content">
+    <div class="topbar">
+      <h1 class="h1">Practice MCQs</h1>
+      <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="card filter-bar">
+      <button class="filter-toggle">
+        <i class="fa-solid fa-sliders"></i> Filters
+      </button>
+      <div id="filter-panel" class="filter-panel hidden">
+        <div class="grid two">
+          <div class="form-row">
+            <label for="subject-filter">Subject</label>
+            <select id="subject-filter">
+              <option value="">All Subjects</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="topic-filter">Topic</label>
+            <select id="topic-filter">
+              <option value="">All Topics</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="exam-filter">Exam</label>
+            <select id="exam-filter">
+              <option value="">All Exams</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="sort-filter">Sort By</label>
+            <select id="sort-filter">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="year:desc">Year (Newest)</option>
+              <option value="year:asc">Year (Oldest)</option>
+              <option value="subject:asc">Subject (A-Z)</option>
+              <option value="exam:asc">Exam (A-Z)</option>
+              <option value="random">Random Order</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Year range filter -->
+        <div class="form-row">
+          <label for="year-range">Year Filter</label>
+          <div class="year-filter-container">
+            <span id="year-min-label">2000</span>
+            <input type="range" id="year-range" min="2000" max="2025" value="2025"/>
+            <span id="year-max-label">2025</span>
+          </div>
+          <div class="year-display">
+            <span id="year-label">Up to 2025</span>
+          </div>
+        </div>
+
+        <select id="difficulty-filter" class="mcq-filter">
+              <option value="">All Difficulties</option>
+            </select>
+            <!-- NEW: Marks Filter -->
+            <select id="marks-filter" class="mcq-filter">
+              <option value="">All Marks</option>
+            </select>
+
+        <!-- Search -->
+        <div class="form-row">
+          <label for="search-box">Search</label>
+          <input type="text" id="search-box" placeholder="Search questions, topics, exams..."/>
+        </div>
+        
+        <!-- Filter Stats -->
+        <div class="filter-stats">
+          <span id="filter-results">Loading questions...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Container -->
+    <section id="mcq-container" class="fade-in">
+      <div class="card">
+        <p class="hint">Loading questions...</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="mcq.js"></script>
+  <script src="shared.js"></script>
+</body>
+</html>

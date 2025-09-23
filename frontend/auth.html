@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MCQ Hub • Login / Register</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 480px) {
+            .name-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .grid.three {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .grid.three {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .alert {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            max-width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+            border-left: 4px solid #10b981;
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .form-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary, #6b7280);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .auth-wrap {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .auth-wrap:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .loading-btn {
+            position: relative;
+        }
+        
+        .loading-btn .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="auth.html" id="auth-link" class="active"><i class="fa-solid fa-right-to-bracket"></i> Login / Register</a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+        </div>
+    </aside>
+    
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1">Login / Register</h1>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+        
+        <div class="grid three">
+            <!-- Regular Registration -->
+            <section class="card auth-wrap fade-in">
+                <h3 style="margin-bottom:10px;"><i class="fa-solid fa-user-plus"></i> Register</h3>
+                <p class="form-description">Create your student account to start practicing</p>
+                <form id="registerForm" class="form">
+                    <div class="name-row">
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="reg-firstname" placeholder="First Name" required>
+                        </div>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="reg-lastname" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-at"></i>
+                        <input type="email" id="reg-email" placeholder="Email (Optional)">
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <input type="text" id="reg-username" placeholder="Username" required>
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="reg-password" placeholder="Password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn primary">
+                        <i class="fa-solid fa-user-plus"></i> Create account
+                    </button>
+                </form>
+            </section>
+
+            <!-- Login -->
+            <section class="card auth-wrap fade-in">
+                <h3 style="margin-bottom:10px;"><i class="fa-solid fa-right-to-bracket"></i> Login</h3>
+                <p class="form-description">Sign in to access your dashboard</p>
+                <form id="loginForm" class="form">
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="log-username" placeholder="Username" required>
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="log-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn primary">
+                        <i class="fa-solid fa-right-to-bracket"></i> Log in
+                    </button>
+                </form>
+            </section>
+
+            <!-- Admin Registration -->
+            <section class="card auth-wrap fade-in">
+                <h3 style="margin-bottom:10px;"><i class="fa-solid fa-user-shield"></i> Admin Registration</h3>
+                <p class="form-description">Register as administrator (requires secret key)</p>
+                <form id="adminRegisterForm" class="form">
+                    <div class="name-row">
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="admin-firstname" placeholder="First Name" required>
+                        </div>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="admin-lastname" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <input type="text" id="admin-username" placeholder="Admin Username" required>
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="admin-password" placeholder="Password" required minlength="6">
+                    </div>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-key"></i>
+                        <input type="password" id="admin-secret" placeholder="Admin Secret Key" required>
+                    </div>
+                    <button type="submit" class="btn danger">
+                        <i class="fa-solid fa-user-shield"></i> Register as Admin
+                    </button>
+                </form>
+            </section>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html>

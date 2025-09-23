@@ -1,0 +1,412 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MCQ Hub • Mock Test</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+            <a href="#" id="logout-btn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1">Mock Test</h1>
+            <div id="timer" class="icon-btn"><i class="fa-solid fa-clock"></i> 00:00</div>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+        <form id="test-form" class="card">
+            <div id="test-container"><p class="hint">Loading mock test…</p></div>
+            <button type="submit" id="submit-button" class="btn primary" disabled>
+                <i class="fa-solid fa-check"></i> Submit Test
+            </button>
+        </form>
+        <div id="results" class="card hidden">
+            <h2 style="margin-bottom:8px;"><i class="fa-solid fa-poll"></i> Results</h2>
+            <div id="score" style="margin-bottom:8px;"></div>
+            <div id="results-details"></div>
+        </div>
+    </div>
+    <script src="test.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MCQ Hub • Mock Tests</title>
+    <link rel="stylesheet" href="style.css"/>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html" class="active"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="admin-panel.html" id="admin-panel-link" style="display:none;"><i class="fa-solid fa-cog"></i> Admin Panel</a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+            <a href="auth.html" id="auth-link" class="btn primary">Login</a>
+            <a href="#" id="logout-btn" class="btn danger" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1">Mock Tests</h1>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="main-dashboard" class="test-dashboard">
+            <!-- Test Tabs -->
+            <div class="test-tabs">
+                <button class="test-tab active" data-tab="available">
+                    <i class="fas fa-list"></i> Available Tests
+                </button>
+                <button class="test-tab" data-tab="create">
+                    <i class="fas fa-plus"></i> Create Custom Test
+                </button>
+                <button class="test-tab" data-tab="history">
+                    <i class="fas fa-history"></i> Test History
+                </button>
+                <button class="test-tab admin-only" data-tab="admin" style="display: none;">
+                    <i class="fas fa-cog"></i> Manage Tests
+                </button>
+            </div>
+
+            <!-- Available Tests Tab -->
+            <div id="available-tab" class="tab-content active">
+                <div class="dashboard-header">
+                    <h2>Choose Your Test</h2>
+                    <p>Select from pre-made tests or your custom tests</p>
+                </div>
+                
+                <div id="available-tests" class="test-grid">
+                    <!-- Tests will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Create Custom Test Tab -->
+            <div id="create-tab" class="tab-content">
+                <div class="create-test-form">
+                    <h2><i class="fas fa-plus-circle"></i> Create Custom Test</h2>
+                    <form id="custom-test-form" class="form-grid">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="test-name">Test Name</label>
+                                <input type="text" id="test-name" name="testName" required placeholder="Enter test name">
+                            </div>
+                            <div class="form-group">
+                                <label for="test-duration">Duration (minutes)</label>
+                                <input type="number" id="test-duration" name="duration" min="5" max="180" value="30" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="question-count">Number of Questions</label>
+                                <input type="number" id="question-count" name="questionCount" min="1" max="100" value="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="difficulty">Difficulty</label>
+                                <select id="difficulty" name="difficulty">
+                                    <option value="mixed">Mixed</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Subjects</label>
+                            <div id="subject-filters" class="subject-filters">
+                                <!-- Subject chips will be loaded here -->
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-start">
+                            <i class="fas fa-play"></i> Create & Start Test
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Test History Tab -->
+            <div id="history-tab" class="tab-content">
+                <div class="dashboard-header">
+                    <h2>Your Test History</h2>
+                    <p>Review your past performance and analytics</p>
+                </div>
+                
+                <div id="test-history" class="test-grid">
+                    <!-- Test history will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Admin Tab -->
+            <div id="admin-tab" class="tab-content">
+                <div class="admin-section">
+                    <h2><i class="fas fa-cog"></i> Manage Tests (Admin)</h2>
+                    <div id="admin-tests">
+                        <!-- Admin test management will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fullscreen Test Interface -->
+        <div class="fullscreen-test" id="fullscreen-test" style="display: none;">
+            <!-- Header -->
+            <div class="test-header">
+                <div class="test-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span id="test-title">Mock Test</span>
+                </div>
+                <div class="test-info">
+                    <div class="timer" id="timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="timer-display">30:00</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="user-name">Student</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="test-main">
+                <!-- Question Section -->
+                <div class="question-section">
+                    <div class="question-header">
+                        <div class="question-number" id="question-number">Question No. 1</div>
+                        <div class="question-marks">
+                            <div class="marks-info positive">
+                                <span>Marks for correct answer: </span>
+                                <strong id="positive-marks">1</strong>
+                            </div>
+                            <div class="marks-info negative">
+                                <span>Negative Marks: </span>
+                                <strong id="negative-marks">0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-content">
+                        <div class="question-text" id="question-text">
+                            Loading question...
+                        </div>
+                        
+                        <div class="question-image" id="question-image" style="display: none;">
+                            <img src="" alt="Question Image" id="question-img" class="mcq-image">
+                        </div>
+                    </div>
+
+                    <div class="options-container" id="options-container">
+                        <!-- Options will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Navigation Sidebar -->
+                <div class="navigation-sidebar">
+                    <div class="nav-header">
+                        <div class="nav-title">Test Navigation</div>
+                        <div class="progress-info" id="progress-info">Question 1 of 20</div>
+                    </div>
+
+                    <div class="question-stats">
+                        <div class="stats-grid">
+                            <div class="stat-item stat-answered">
+                                <div style="font-weight: 600;" id="answered-count">0</div>
+                                <div>Answered</div>
+                            </div>
+                            <div class="stat-item stat-not-answered">
+                                <div style="font-weight: 600;" id="not-answered-count">0</div>
+                                <div>Not Answered</div>
+                            </div>
+                            <div class="stat-item stat-not-visited">
+                                <div style="font-weight: 600;" id="not-visited-count">20</div>
+                                <div>Not Visited</div>
+                            </div>
+                            <div class="stat-item stat-marked">
+                                <div style="font-weight: 600;" id="marked-count">0</div>
+                                <div>Marked for Review</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-palette">
+                        <div class="palette-title">Choose a Question</div>
+                        <div class="palette-grid" id="question-palette">
+                            <!-- Question numbers will be generated here -->
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-warning" onclick="markForReviewAndNext()">
+                            <i class="fas fa-bookmark"></i>
+                            Mark for Review & Next
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearResponse()">
+                            <i class="fas fa-eraser"></i>
+                            Clear Response
+                        </button>
+                        <button class="btn btn-primary" onclick="saveAndNext()">
+                            <i class="fas fa-save"></i>
+                            Save & Next
+                        </button>
+                        <button class="btn btn-success" onclick="submitFullscreenTest()">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="bottom-navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()" id="prev-btn">
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="btn btn-secondary" onclick="toggleInstructions()">
+                        <i class="fas fa-info-circle"></i>
+                        Instructions
+                    </button>
+                    <button class="btn btn-secondary" onclick="exitFullscreenTest()">
+                        <i class="fas fa-times"></i>
+                        Exit Test
+                    </button>
+                </div>
+                <button class="btn btn-primary" onclick="nextQuestion()" id="next-btn">
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Instructions Panel -->
+        <div class="instructions-panel" id="instructions-panel">
+            <div class="instructions-header">
+                <h3>Test Instructions</h3>
+                <button class="close-btn" onclick="toggleInstructions()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="instructions-content">
+                <h4>General Instructions:</h4>
+                <ul style="margin: 1rem 0; line-height: 1.6;">
+                    <li>Total duration of the test is shown in the timer</li>
+                    <li>Each question carries marks as indicated</li>
+                    <li>Navigate between questions using the question palette</li>
+                    <li>Mark questions for review if you want to revisit them</li>
+                    <li>Submit your test before time runs out</li>
+                </ul>
+                
+                <h4 style="margin-top: 2rem;">Question Status:</h4>
+                <div style="margin: 1rem 0;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: var(--success-color); border-radius: 4px;"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: var(--danger-color); border-radius: 4px;"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: var(--gray-400); border-radius: 4px;"></div>
+                        <span>Not Visited</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: var(--warning-color); border-radius: 4px;"></div>
+                        <span>Marked for Review</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: var(--primary-color); border-radius: 4px;"></div>
+                        <span>Current Question</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="results-section">
+            <div class="results-header">
+                <h2><i class="fas fa-trophy"></i> Test Results</h2>
+                <div id="score-display" class="score-display">85%</div>
+                <div id="score-summary"></div>
+                
+                <div class="score-breakdown">
+                    <div class="score-stat">
+                        <div class="test-stat-number" id="correct-count">17</div>
+                        <div class="test-stat-label">Correct</div>
+                    </div>
+                    <div class="score-stat">
+                        <div class="test-stat-number" id="incorrect-count">3</div>
+                        <div class="test-stat-label">Incorrect</div>
+                    </div>
+                    <div class="score-stat">
+                        <div class="test-stat-number" id="time-taken">28:45</div>
+                        <div class="test-stat-label">Time Taken</div>
+                    </div>
+                    <div class="score-stat">
+                        <div class="test-stat-number" id="accuracy">85%</div>
+                        <div class="test-stat-label">Accuracy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-section">
+                <h3><i class="fas fa-chart-bar"></i> Performance Analytics</h3>
+                <div id="subject-analysis"></div>
+            </div>
+
+            <div id="question-review-section">
+                <h3><i class="fas fa-eye"></i> Question Review</h3>
+                <div id="questions-review">
+                    <!-- Detailed question review will be loaded here -->
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="back-to-dashboard" class="btn primary">
+                    <i class="fas fa-home"></i> Back to Dashboard
+                </button>
+                <button id="retake-test" class="btn-start">
+                    <i class="fas fa-redo"></i> Retake Test
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="test.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html>

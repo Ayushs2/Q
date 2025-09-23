@@ -1,0 +1,276 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MCQ Hub • Home</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="dot"></span><span>MCQ Hub</span></div>
+        <nav class="nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice</a>
+            <a href="test.html"><i class="fa-solid fa-pen-to-square"></i> Mock Test</a>
+            <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="create-mcq.html" id="create-mcq-link" style="display:none;">
+      <i class="fa-solid fa-plus"></i> Create MCQ
+    </a>
+        </nav>
+        <div class="bottom">
+            <button id="theme-toggle-btn" class="icon-btn"><i class="fa-solid fa-moon"></i> Theme</button>
+            <a href="auth.html" id="auth-link" class="btn primary"><i class="fa-solid fa-right-to-bracket"></i> Login / Register</a>
+            <a href="#" id="logout-btn" class="btn danger" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+    <div class="content">
+        <div class="topbar">
+            <h1 class="h1">Welcome</h1>
+            <button id="sidebar-toggle" class="icon-btn hamburger"><i class="fa-solid fa-bars"></i> Menu</button>
+        </div>
+        <section class="grid two fade-in">
+            <div class="card">
+                <h2 style="margin-bottom:8px;">Your path to mastering Chemical Engineering</h2>
+                <p style="color:var(--muted); margin-bottom:12px;">
+                    Practice curated MCQs with explanations, take timed mock tests, track progress, and bookmark tricky questions.
+                </p>
+                <div style="display:flex; gap:8px; flex-wrap:wrap">
+                    <a class="cta" href="mcq.html"><i class="fa-solid fa-list-check"></i> Practice MCQs</a>
+                    <a class="cta" href="test.html"><i class="fa-solid fa-clock"></i> Start Mock Test</a>
+                    <a class="cta" href="dashboard.html"><i class="fa-solid fa-chart-line"></i> My Dashboard</a>
+                </div>
+            </div>
+            <div class="card upload-section" id="admin-upload" style="display:none;">
+                <h2 style="margin-bottom:8px;">Admin • Upload MCQs</h2>
+                <p class="hint" style="margin-bottom:10px;">Only visible if your role is <b>admin</b>.</p>
+                <form id="uploadForm" class="form">
+                    <label for="mcqFile">Excel (.xlsx)</label>
+                    <input type="file" id="mcqFile" name="mcqFile" accept=".xlsx" required>
+                    <button type="submit" class="btn primary"><i class="fa-solid fa-upload"></i> Upload</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="admin.js"></script>
+    <script src="shared.js"></script>
+</body>
+</html>
+ -->
+
+<!-- Above old HTML with excel upload option -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Chemical Engineering GATE preparation with MCQ Hub. Practice curated questions, take mock tests, and track your progress.">
+<meta name="keywords" content="GATE, Chemical Engineering, MCQ, Practice Questions, Mock Tests">
+    <title>MCQ Hub - Master Chemical Engineering</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="landing-page">
+    <!-- Navigation -->
+     <div class="user-greeting">
+    Welcome, <span class="user-name">User</span>!
+</div>
+    <nav class="landing-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="dot"></span>
+                MCQ Hub
+            </a>
+            <div class="nav-links">
+                <a href="mcq.html">Practice</a>
+                <a href="test.html">Mock Tests</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="admin-panel.html" id="admin-panel-link" style="display:none;">Admin Panel</a>
+                <a href="auth.html" id="auth-link" class="btn primary">Login</a>
+                <a href="#" id="logout-btn" class="btn danger" style="display:none;">Logout</a>
+                <button id="theme-toggle-btn" class="icon-btn">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Master Chemical Engineering with MCQ Hub</h1>
+                <p class="hero-subtitle">
+                    Practice curated multiple-choice questions, take timed mock tests, 
+                    and track your progress with detailed analytics. Your path to GATE success starts here.
+                </p>
+                <div class="hero-actions">
+                    <a href="mcq.html" class="cta-btn primary">
+                        <i class="fa-solid fa-play"></i>
+                        Start Practicing
+                    </a>
+                    <a href="test.html" class="cta-btn secondary">
+                        <i class="fa-solid fa-clock"></i>
+                        Take Mock Test
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="feature-card">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>Smart Learning</h3>
+                    <p>AI-powered question recommendations</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>Track Progress</h3>
+                    <p>Detailed analytics and insights</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <h3>Save & Review</h3>
+                    <p>Bookmark difficult questions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose MCQ Hub?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3>GATE Focused</h3>
+                    <p>Curated questions specifically designed for Chemical Engineering GATE preparation with year-wise classification.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3>Detailed Explanations</h3>
+                    <p>Every question comes with comprehensive explanations and visual aids to help you understand concepts better.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <h3>Timed Practice</h3>
+                    <p>Take realistic mock tests with proper time constraints to simulate actual exam conditions.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <h3>Smart Filtering</h3>
+                    <p>Filter questions by subject, topic, year, and difficulty to focus on areas that need improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Practice Questions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Years Covered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Topics Available</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free to Use</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About MCQ Hub</h2>
+                    <p>
+                        MCQ Hub is a comprehensive platform designed specifically for Chemical Engineering students 
+                        preparing for GATE and other competitive examinations. Our curated collection of questions 
+                        covers all major topics with detailed explanations and visual aids.
+                    </p>
+                    <p>
+                        Built with modern web technologies, the platform offers a seamless learning experience 
+                        with features like progress tracking, bookmark functionality, and personalized analytics 
+                        to help you identify strengths and areas for improvement.
+                    </p>
+                </div>
+                <div class="about-image">
+                    <div class="about-card">
+                        <i class="fa-solid fa-flask"></i>
+                        <h4>Chemical Engineering Focus</h4>
+                        <p>Specialized content for ChemE students</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <span class="dot"></span>
+                            MCQ Hub
+                        </div>
+                        <p>Empowering Chemical Engineering students with comprehensive practice materials and tools for GATE success.</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="link-group">
+                            <h4>Platform</h4>
+                            <a href="mcq.html">Practice Questions</a>
+                            <a href="test.html">Mock Tests</a>
+                            <a href="dashboard.html">Dashboard</a>
+                        </div>
+                        <div class="link-group">
+                            <h4>Features</h4>
+                            <a href="#">Progress Tracking</a>
+                            <a href="#">Bookmarks</a>
+                            <a href="#">Analytics</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-about">
+                        <h4>About the Developer</h4>
+                        <p>
+                            <strong>MCQ Hub</strong> is developed and maintained by a passionate Chemical Engineering enthusiast 
+                            committed to helping students excel in their academic journey. The platform combines educational 
+                            expertise with modern technology to create an effective learning environment.
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-envelope"></i> 
+                            For feedback or suggestions, feel free to reach out through the platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="shared.js"></script>
+</body>
+</html>
